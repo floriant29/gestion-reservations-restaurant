@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - MEWS_API_KEY=${MEWS_API_KEY}
+      - DB_HOST=postgres
+      - DB_USER=utilisateur
+      - DB_PASSWORD=motdepasse
+      - DB_NAME=gestion_reservations
+    depends_on:
+      - postgres
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: utilisateur
+      POSTGRES_PASSWORD: motdepasse
+      POSTGRES_DB: gestion_reservations
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
