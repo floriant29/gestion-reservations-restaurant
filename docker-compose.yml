@@ -1,30 +1,34 @@
 version: '3.8'
+
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "3000:3000"
-    environment:
-      - MEWS_API_KEY=${MEWS_API_KEY}
-      - DB_HOST=postgres
-      - DB_USER=utilisateur
-      - DB_PASSWORD=motdepasse
-      - DB_NAME=gestion_reservations
-    depends_on:
-      - postgres
   frontend:
     build: ./frontend
     ports:
-      - "80:80"
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://backend:8000
     depends_on:
       - backend
-  postgres:
-    image: postgres:13
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./coolify/coolify.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
     environment:
-      POSTGRES_USER: utilisateur
-      POSTGRES_PASSWORD: motdepasse
-      POSTGRES_DB: gestion_reservations
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: reservation_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
 volumes:
   postgres_data:

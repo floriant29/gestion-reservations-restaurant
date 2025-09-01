@@ -1,7 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { PublicClientApplication } from '@azure/msal-browser';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { MsalProvider } from "@azure/msal-react";
+import { PublicClientApplication } from "@azure/msal-browser";
+import { msalConfig } from "./services/authConfig";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import Reservations from "./pages/Reservations";
+import Forecasts from "./pages/Forecasts";
+import ITDashboard from "./pages/ITDashboard";
+
+const msalInstance = new PublicClientApplication(msalConfig);
 
 function App() {
+<<<<<<< HEAD
   const [reservations, setReservations] = useState([]);
   const msalConfig = {
     auth: {
@@ -26,11 +37,21 @@ function App() {
     fetchData();
   }, []);
 
+=======
+>>>>>>> 5326804 (front update)
   return (
-    <div>
-      <h1>Réservations</h1>
-      <pre>{JSON.stringify(reservations, null, 2)}</pre>
-    </div>
+    <MsalProvider instance={msalInstance}>
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/reservations" element={<Reservations />} />
+            <Route path="/forecasts" element={<Forecasts />} />
+            <Route path="/it-dashboard" element={<ITDashboard />} />
+          </Routes>
+        </Layout>
+      </Router>
+    </MsalProvider>
   );
 }
 
