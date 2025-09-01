@@ -12,6 +12,9 @@
     "@mui/material": "^5.14.0",
     "@mui/icons-material": "^5.14.0"
   },
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
