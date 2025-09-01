@@ -4,7 +4,7 @@ FROM node:18 as build
 WORKDIR /app
 
 # Copie des fichiers de configuration pour le cache
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 # Installation des dépendances
 RUN npm install
