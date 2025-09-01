@@ -8,6 +8,12 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 
+// Route healthcheck
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+
 // Route pour récupérer les données Mews
 app.get('/api/mews/:typeRepas', async (req, res) => {
   try {
