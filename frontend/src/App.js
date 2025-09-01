@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MsalProvider } from "@azure/msal-react";
 import { PublicClientApplication } from "@azure/msal-browser";
@@ -12,17 +12,7 @@ import ITDashboard from "./pages/ITDashboard";
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function App() {
-<<<<<<< HEAD
   const [reservations, setReservations] = useState([]);
-  const msalConfig = {
-    auth: {
-      clientId: process.env.REACT_APP_AZURE_CLIENT_ID,
-      authority: `https://login.microsoftonline.com/${process.env.REACT_APP_AZURE_TENANT_ID}`,
-
-      redirectUri: window.location.origin,
-    },
-  };
-  const msalInstance = new PublicClientApplication(msalConfig);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,15 +27,13 @@ function App() {
     fetchData();
   }, []);
 
-=======
->>>>>>> 5326804 (front update)
   return (
     <MsalProvider instance={msalInstance}>
       <Router>
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/reservations" element={<Reservations />} />
+            <Route path="/reservations" element={<Reservations reservations={reservations} />} />
             <Route path="/forecasts" element={<Forecasts />} />
             <Route path="/it-dashboard" element={<ITDashboard />} />
           </Routes>
