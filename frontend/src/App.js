@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { MsalProvider } from "@azure/msal-react";
 import { PublicClientApplication } from "@azure/msal-browser";
-import { msalConfig } from "./services/authConfig";
+import { msalConfig } from "./authConfig";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Reservations from "./pages/Reservations";
