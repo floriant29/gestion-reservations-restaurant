@@ -1,10 +1,27 @@
-# Frontend Dockerfile
-FROM node:18
+# Étape 1 : Build de l'application React
+FROM node:18 as build
+
 WORKDIR /app
-COPY package.json .
+
+# Copie des fichiers de configuration pour le cache
+COPY package.json package-lock.json ./
+
+# Installation des dépendances
 RUN npm install
-RUN npm install -g serve
+
+# Copie du reste des fichiers et build
 COPY . .
 RUN npm run build
+
+# Étape 2 : Serveur Nginx pour servir l'application
+FROM nginx:alpine
+
+# Copie des fichiers buildés
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Configuration Nginx pour gérer le routage côté client
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 3000
-CMD ["npm", "start"]
+
+CMD ["nginx", "-g", "daemon off;"]
