@@ -25,9 +25,19 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
+
+
+
+
 @app.get("/")
 def read_root():
     return {"message": "Backend pour la gestion des réservations"}
+
+
+@app.get("/health")  # <-- Ajoutez cette route
+def health_check():
+    return {"status": "healthy"}
+
 
 @app.get("/reservations/{meal_type}")
 def get_reservations(meal_type: str):
