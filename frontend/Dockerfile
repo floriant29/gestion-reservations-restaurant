@@ -22,6 +22,10 @@ COPY --from=build /app/build /usr/share/nginx/html
 # Configuration Nginx pour gérer le routage côté client
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Ajouter un healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost || exit 1
+
 EXPOSE 3000
 
 CMD ["nginx", "-g", "daemon off;"]
